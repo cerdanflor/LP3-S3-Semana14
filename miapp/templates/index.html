@@ -18,16 +18,7 @@
         <strong>El mensaje no tiene contenido...</strong>
     {% endif %}
 
-    <p><strong>Estudiantes Registrados (Método 01: Imprime Lista): </strong>  </p>
-    {{estudiantes}}
-
-    <p><strong>Estudiantes Registrados (Método 02: Imprime Lista utilizando for): </strong></p>
-    <ul>
-        {% for estudiante in estudiantes %}
-            <li>{{forloop.counter}}. {{estudiante}}</li>
-        {% empty %}
-            <p>No hay estudiantes registrados</p>
-        {% endfor %}
-    </ul>
+    {% include 'listado_estudiantesregistrados.html' with encabezado="Estudiantes Registrados" %}
+    {% include 'filtros.html' with encabezado="Uso de Filtros" %}
     <p>Año 2020 </p>
 {% endblock %}
