@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect
 from miapp.models import Articulo
+from django.db.models import Q
 
 # Create your views here.
 
@@ -81,7 +82,10 @@ def editar_articulo(request, id):
     return HttpResponse(f"Articulo Editado:  <br>ID:{articulo.id} <br>Nuevo Título: {articulo.titulo} <br>Nuevo Contenido: {articulo.contenido}")
 
 def listar_articulos(request):
-    articulos = Articulo.objects.all()    
+    #articulos = Articulo.objects.all()    
+    articulos = Articulo.objects.filter(
+        Q(titulo__contains="Java") | Q(titulo__contains="PHP")    
+    )
     return render(request,'listar_articulos.html',{
         'articulos': articulos,
         'titulo': 'Listado de Articulos'
@@ -91,3 +95,16 @@ def eliminar_articulo(request, id):
     articulo = Articulo.objects.get(pk=id)
     articulo.delete()
     return redirect('listar_articulos')
+
+
+def save_articulo(request):
+    articulo = Articulo(
+        titulo = titulo,
+        contenido = contenido,
+        publicado = publicado
+    )
+    articulo.save()
+    return HttpResponse(f"Articulo Creado: {articulo.titulo} - {articulo.contenido}")
+
+def create_articulo(request):
+    return render(request, 'create_articulo.html')
